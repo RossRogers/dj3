@@ -399,7 +399,7 @@ class Query(BaseExpression):
                         # Reference column or another aggregate. Select it
                         # under a non-conflicting alias.
                         col_cnt += 1
-                        col_alias = '__col%d' % col_cnt
+                        col_alias = 'c__col%d' % col_cnt
                         self.annotations[col_alias] = expr
                         self.append_annotation_mask([col_alias])
                         new_expr = Ref(col_alias, expr)
@@ -511,8 +511,8 @@ class Query(BaseExpression):
         Perform a COUNT() query using the current filter constraints.
         """
         obj = self.clone()
-        obj.add_annotation(Count('*'), alias='__count', is_summary=True)
-        number = obj.get_aggregation(using, ['__count'])['__count']
+        obj.add_annotation(Count('*'), alias='c__count', is_summary=True)
+        number = obj.get_aggregation(using, ['c__count'])['c__count']
         if number is None:
             number = 0
         return number
